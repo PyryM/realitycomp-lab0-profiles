@@ -80,21 +80,14 @@ function animatePortrait(dt, cursorX, cursorY) {
 
   // make the portrait tilt towards the mouse cursor
   // (feel free to replace this with something else!)
-  var x = Math.max(-1.0, Math.min(1.0, pixelToRadians(cursorX)));
-  var y = Math.max(-1.0, Math.min(1.0, pixelToRadians(cursorY)));
+  var x = Math.max(-2.0, Math.min(2.0, pixelToRadians(cursorX)));
+  var y = Math.max(-2.0, Math.min(2.0, pixelToRadians(cursorY)));
 
   rotatorNode.rotation.set(y, x, 0, 'YXZ');
 }
 
 // helper function to non-linearly map an offset in pixels into radians
 function pixelToRadians(pixval) {
-  var sign = 1.0;
-  var absval = Math.abs(pixval);
-  var scalefactor = 0.01;
-  
-  if(pixval < 0.0) {
-    sign = -1.0;
-  }
-
-  return sign * Math.sqrt(absval) * scalefactor;
+  var scalefactor = 0.005;
+  return Math.tanh(pixval * scalefactor);
 }
