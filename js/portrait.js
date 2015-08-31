@@ -54,11 +54,11 @@ function initPortrait(scene, renderer) {
 
   // create a basic lambertian material with our texture
   //var material = new THREE.MeshLambertMaterial({map: texture});
-  //var material = new THREE.MeshLambertMaterial();
+  // var material = new THREE.MeshLambertMaterial();
 
-  var shininess = 3, specular = 0x666666, bumpScale = 0.5, shading = THREE.SmoothShading;
+  var shininess = 10, specular = 0xffffff, bumpScale = 0.1, shading = THREE.SmoothShading;
   var material = new THREE.MeshPhongMaterial( { bumpMap: texture, bumpScale: bumpScale,
-                                                color: 0xffeedd, 
+                                                color: 0x606060, 
                                                 specular: specular, shininess: shininess, shading: shading } );
 
   // create shader material
@@ -96,17 +96,17 @@ function initPortrait(scene, renderer) {
 
   }, onProgress, onError );
 
-  // objloader.load( 'meshes/myface_big.obj', material, function ( object ) {
+  objloader.load( 'meshes/myface_big.obj', material, function ( object ) {
 
-  //   // this is a good spot to apply what transforms you need to the model
-  //   object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
-  //   object.scale.set(1.8, 1.8, 1.8);
-  //   object.position.set(-0.2, 0.1, 0.0);
+    // this is a good spot to apply what transforms you need to the model
+    object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
+    object.scale.set(2, 2, 2);
+    object.position.set(-0.2, 0.1, 0.0);
 
-  //   // make sure to actually add it to the scene or it won't show up!
-  //   rotatorNode.add( object );
+    // make sure to actually add it to the scene or it won't show up!
+    rotatorNode.add( object );
 
-  // }, onProgress, onError );
+  }, onProgress, onError );
 }
 
 
