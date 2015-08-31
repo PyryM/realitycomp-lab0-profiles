@@ -45,7 +45,7 @@ function initPortrait(scene, renderer) {
   var texture = new THREE.Texture();
 
   var texloader = new THREE.ImageLoader( manager );
-  texloader.load( 'textures/myface_tex_0.jpg', function ( image ) {
+  texloader.load( 'textures/checkerboard.png', function ( image ) {
     texture.image = image;
     texture.needsUpdate = true;
   } );
@@ -55,12 +55,12 @@ function initPortrait(scene, renderer) {
 
   // load obj model
   var objloader = new THREE.OBJLoader( manager );
-  objloader.load( 'meshes/myface_big.obj', material, function ( object ) {
+  objloader.load( 'meshes/placeholder_person.obj', material, function ( object ) {
 
     // this is a good spot to apply what transforms you need to the model
-    object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
-    object.scale.set(2.0, 2.0, 2.0);
-    object.position.set(-0.1, 0.1, 0.0);
+    object.rotation.set(0.0, 0.0, 0.0, 'YXZ');
+    object.scale.set(1.2, 1.2, 1.2);
+    object.position.set(0.0, -0.5, 0.0);
 
     // make sure to actually add it to the scene or it won't show up!
     rotatorNode.add( object );
