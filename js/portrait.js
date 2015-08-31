@@ -45,22 +45,28 @@ function initPortrait(scene, renderer) {
   var texture = new THREE.Texture();
 
   var texloader = new THREE.ImageLoader( manager );
-  texloader.load( 'textures/checkerboard.png', function ( image ) {
+  texloader.load( 'textures/clouds.png', function ( image ) {
     texture.image = image;
     texture.needsUpdate = true;
   } );
 
   // create a basic lambertian material with our texture
-  var material = new THREE.MeshLambertMaterial({map: texture});
+  //var material = new THREE.MeshLambertMaterial({map: texture});
+  //var material = new THREE.MeshLambertMaterial();
+
+  var shininess = 80, specular = 0x666666, bumpScale = 0.5, shading = THREE.SmoothShading;
+  var material = new THREE.MeshPhongMaterial( { bumpMap: texture, bumpScale: bumpScale,
+                                                color: 0xffff66, 
+                                                specular: specular, shininess: shininess, shading: shading } );
 
   // load obj model
   var objloader = new THREE.OBJLoader( manager );
-  objloader.load( 'meshes/placeholder_person.obj', material, function ( object ) {
+  objloader.load( 'meshes/myface_big.obj', material, function ( object ) {
 
     // this is a good spot to apply what transforms you need to the model
-    object.rotation.set(0.0, 0.0, 0.0, 'YXZ');
-    object.scale.set(1.2, 1.2, 1.2);
-    object.position.set(0.0, -0.5, 0.0);
+    object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
+    object.scale.set(2, 2, 2);
+    object.position.set(-0.2, 0.1, 0.0);
 
     // make sure to actually add it to the scene or it won't show up!
     rotatorNode.add( object );
