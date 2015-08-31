@@ -7,6 +7,8 @@
 var thePortrait = null;
 var rotatorNode = null;
 
+var theMat = null;
+
 // this function sets up the portrait: edit it to load your portrait and
 // position it so it is visible to the camera
 function initPortrait(scene, renderer) {
@@ -59,9 +61,24 @@ function initPortrait(scene, renderer) {
                                                 color: 0xffeedd, 
                                                 specular: specular, shininess: shininess, shading: shading } );
 
+  // create shader material
+  var ghostuniforms = {diffuseColor: {type: "v4", value: new THREE.Vector4(1.0,1.0,1.0,1.0)},
+    ghostMap: {type: "t", value: texture},
+    ghostParam: {type: "f", value: 0.5},
+    ghostTime: {type: "f", value: 1.0}};
+
+  var ghostopts = {
+      uniforms:       ghostuniforms,
+      vertexShader:   ghost_vs,
+      fragmentShader: ghost_fs
+  };
+
+  var ghostmat = new THREE.ShaderMaterial(ghostopts);
+  theMat = ghostmat;
+
   // load obj model
   var objloader = new THREE.OBJLoader( manager );
-  objloader.load( 'meshes/myface_big.obj', material, function ( object ) {
+  objloader.load( 'meshes/myface_big.obj', ghostmat, function ( object ) {
 
     // this is a good spot to apply what transforms you need to the model
     object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
@@ -83,6 +100,8 @@ function initPortrait(scene, renderer) {
 // cursorX and cursorY indicate the relative position of the mouse cursor
 // to the viewing window (so you can make the portrait look at the mouse)
 function animatePortrait(dt, cursorX, cursorY) {
+  // update ghost time
+  theMat.uniforms.ghostTime.value += dt;
 
   // make the portrait tilt towards the mouse cursor
   // (feel free to replace this with something else!)
