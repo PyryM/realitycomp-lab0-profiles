@@ -54,9 +54,9 @@ function initPortrait(scene, renderer) {
   //var material = new THREE.MeshLambertMaterial({map: texture});
   //var material = new THREE.MeshLambertMaterial();
 
-  var shininess = 80, specular = 0x666666, bumpScale = 0.5, shading = THREE.SmoothShading;
+  var shininess = 3, specular = 0x666666, bumpScale = 0.5, shading = THREE.SmoothShading;
   var material = new THREE.MeshPhongMaterial( { bumpMap: texture, bumpScale: bumpScale,
-                                                color: 0xffff66, 
+                                                color: 0xffeedd, 
                                                 specular: specular, shininess: shininess, shading: shading } );
 
   // load obj model
