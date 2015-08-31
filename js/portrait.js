@@ -55,7 +55,7 @@ function initPortrait(scene, renderer) {
 
     // this is a good spot to apply what transforms you need to the model
     object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
-    object.scale.set(1.0, 1.0, 1.0);
+    object.scale.set(2.0, 2.0, 2.0);
     object.position.set(0.0, 0.0, 0.0);
 
     // make sure to actually add it to the scene or it won't show up!

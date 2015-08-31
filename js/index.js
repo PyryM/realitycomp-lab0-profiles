@@ -7,8 +7,8 @@ var camera, scene, renderer;
 
 var mouseX = 0, mouseY = 0;
 
-var windowHalfX = window.innerWidth / 2;
-var windowHalfY = window.innerHeight / 2;
+var windowHalfX = 10;
+var windowHalfY = 10;
 
 
 $(function() {
@@ -18,10 +18,11 @@ $(function() {
 
 function init() {
 
-  container = document.createElement( 'div' );
-  document.body.appendChild( container );
+  var vp = $("#viewport");
+  windowHalfX = $("#viewport").width() / 2;
+  windowHalfY = $("#viewport").height() / 2;
 
-  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 200 );
+  camera = new THREE.PerspectiveCamera( 70, vp.width() / vp.height(), 0.01, 20 );
   camera.position.z = 2;
 
   // scene
@@ -30,8 +31,8 @@ function init() {
   // renderer
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  container.appendChild( renderer.domElement );
+  renderer.setSize( vp.width(), vp.height() );
+  vp[0].appendChild( renderer.domElement );
 
   // portrait setup (this function is defined by portrait.js)
   initPortrait(scene, renderer);
@@ -43,13 +44,13 @@ function init() {
 }
 
 function onWindowResize() {
-  windowHalfX = window.innerWidth / 2;
-  windowHalfY = window.innerHeight / 2;
+  windowHalfX = $("#viewport").width() / 2;
+  windowHalfY = $("#viewport").height() / 2;
 
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect = windowHalfX / windowHalfY;
   camera.updateProjectionMatrix();
 
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setSize( windowHalfX*2, windowHalfY*2 );
 }
 
 function onDocumentMouseMove( event ) {
