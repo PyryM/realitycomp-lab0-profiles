@@ -10,6 +10,9 @@ var mouseX = 0, mouseY = 0;
 var windowHalfX = 10;
 var windowHalfY = 10;
 
+var windowCenterX = 0;
+var windowCenterY = 0;
+
 
 $(function() {
   init();
@@ -21,6 +24,9 @@ function init() {
   var vp = $("#viewport");
   windowHalfX = $("#viewport").width() / 2;
   windowHalfY = $("#viewport").height() / 2;
+
+  windowCenterX = $("#viewport").offset().left + windowHalfX;
+  windowCenterY = $("#viewport").offset().top + windowHalfY;
 
   camera = new THREE.PerspectiveCamera( 70, vp.width() / vp.height(), 0.01, 20 );
   camera.position.z = 2;
@@ -47,6 +53,9 @@ function onWindowResize() {
   windowHalfX = $("#viewport").width() / 2;
   windowHalfY = $("#viewport").height() / 2;
 
+  windowCenterX = $("#viewport").offset().left + windowHalfX;
+  windowCenterY = $("#viewport").offset().top + windowHalfY;
+
   camera.aspect = windowHalfX / windowHalfY;
   camera.updateProjectionMatrix();
 
@@ -54,8 +63,8 @@ function onWindowResize() {
 }
 
 function onDocumentMouseMove( event ) {
-  mouseX = ( event.clientX - windowHalfX ) / 2;
-  mouseY = ( event.clientY - windowHalfY ) / 2;
+  mouseX = event.clientX - windowCenterX;
+  mouseY = event.clientY - windowCenterY;
 }
 
 function animate() {

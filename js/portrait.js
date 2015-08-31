@@ -5,6 +5,7 @@
 // keep some globals around for convenience
 // (e.g., so you can open the web console and tweak stuff)
 var thePortrait = null;
+var rotatorNode = null;
 
 // this function sets up the portrait: edit it to load your portrait and
 // position it so it is visible to the camera
@@ -22,6 +23,9 @@ function initPortrait(scene, renderer) {
   directionalLight2.position.set( 0, -0.2, 1 );
   scene.add( directionalLight2 );
 
+  // create an empty node that we can rotate according to the mouse position
+  rotatorNode = new THREE.Object3D();
+  scene.add( rotatorNode );
 
   // create a loading manager and have it print out whenever it loads an item
   var manager = new THREE.LoadingManager();
@@ -56,10 +60,10 @@ function initPortrait(scene, renderer) {
     // this is a good spot to apply what transforms you need to the model
     object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
     object.scale.set(2.0, 2.0, 2.0);
-    object.position.set(0.0, 0.0, 0.0);
+    object.position.set(-0.1, 0.1, 0.0);
 
     // make sure to actually add it to the scene or it won't show up!
-    scene.add( object );
+    rotatorNode.add( object );
 
     // set the global se we can easily access the portrait from the console
     thePortrait = object;
@@ -73,5 +77,24 @@ function initPortrait(scene, renderer) {
 // cursorX and cursorY indicate the relative position of the mouse cursor
 // to the viewing window (so you can make the portrait look at the mouse)
 function animatePortrait(dt, cursorX, cursorY) {
-  // nothing to do?
+
+  // make the portrait tilt towards the mouse cursor
+  // (feel free to replace this with something else!)
+  var x = Math.max(-1.0, Math.min(1.0, pixelToRadians(cursorX)));
+  var y = Math.max(-1.0, Math.min(1.0, pixelToRadians(cursorY)));
+
+  rotatorNode.rotation.set(y, x, 0, 'YXZ');
+}
+
+// helper function to non-linearly map an offset in pixels into radians
+function pixelToRadians(pixval) {
+  var sign = 1.0;
+  var absval = Math.abs(pixval);
+  var scalefactor = 0.01;
+  
+  if(pixval < 0.0) {
+    sign = -1.0;
+  }
+
+  return sign * Math.sqrt(absval) * scalefactor;
 }
