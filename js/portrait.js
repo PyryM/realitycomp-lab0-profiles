@@ -70,11 +70,14 @@ function initPortrait(scene, renderer) {
   var ghostopts = {
       uniforms:       ghostuniforms,
       vertexShader:   ghost_vs,
-      fragmentShader: ghost_fs
+      fragmentShader: ghost_fs,
+      side: THREE.DoubleSide
   };
 
   var ghostmat = new THREE.ShaderMaterial(ghostopts);
   theMat = ghostmat;
+
+  var wireframemat = new THREE.MeshBasicMaterial({wireframe: true});
 
   // load obj model
   var objloader = new THREE.OBJLoader( manager );
@@ -92,6 +95,18 @@ function initPortrait(scene, renderer) {
     thePortrait = object;
 
   }, onProgress, onError );
+
+  // objloader.load( 'meshes/myface_big.obj', material, function ( object ) {
+
+  //   // this is a good spot to apply what transforms you need to the model
+  //   object.rotation.set(0.0, Math.PI / 2.0, 0.0, 'YXZ');
+  //   object.scale.set(1.8, 1.8, 1.8);
+  //   object.position.set(-0.2, 0.1, 0.0);
+
+  //   // make sure to actually add it to the scene or it won't show up!
+  //   rotatorNode.add( object );
+
+  // }, onProgress, onError );
 }
 
 

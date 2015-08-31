@@ -11,7 +11,8 @@ var ghost_fs = ["uniform vec4 diffuseColor;",
 				"	float gval = clamp(dot(viewdir, nnorm), 0.01, 0.99);",
 				"	vec2 samppos = vec2(gval, ghostParam);",
 				"	vec4 maskVal = texture2D(ghostMap, samppos);",
-				"   if(sin(ghostTime + v_pos.y * 25.0) < 0.0) discard;",
+				"   float theta = atan(v_pos.z, v_pos.x) + v_pos.y*2.0;",
+				"   if(sin(ghostTime + theta * 15.0) < 0.0) discard;",
 				"	gl_FragColor = vec4(diffuseColor.rgb * maskVal.rgb, 1.0);",
 				"}"].join("\n");
 
